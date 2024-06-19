@@ -1,4 +1,8 @@
-import django
-print(django.get_version())
-import pymysql as my
-print(my.__version__)
+from website import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    
+    
