@@ -11,6 +11,8 @@ class User(db.Model, UserMixin):
     insertPriveledgeYN = db.Column(db.String(1))
     updatePriveledgeYN = db.Column(db.String(1))
     deletePriveledgeYN = db.Column(db.String(1))
+    def get_id(self):
+        return self.UID
 class Alumni(db.Model):
     __tablename__ = 'alumni'
     alumniID = db.Column(db.Integer, primary_key=True)

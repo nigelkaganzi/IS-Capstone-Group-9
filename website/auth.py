@@ -13,13 +13,17 @@ def login():
         
         user = User.query.filter_by(UID=UID).first()
         if user:
-            if check_password_hash(user.password, password):
+            print("user found") # Debug print
+            if user.password == password:
+                print("Password correct") # Debug print
                 flash('Logged in successfully',category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
+                print("Incorrect password")  # Debug print
                 flash('Incorrect password, try again', category='error')
         else:
+            print("user does not exist")  # Debug print
             flash('User does not exist.', category='error')
     return render_template("login.html", user=current_user)
 
