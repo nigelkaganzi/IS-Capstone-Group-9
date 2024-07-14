@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Donations - Alumni Management System</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        /* Navigation bar */
+        nav {
+            background: #000;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background: #FFD700;
+            color: #000;
+        }
+
+        /* Form styles */
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container h2 {
+            color: #000;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="date"],
+        .form-container input[type="email"],
+        .form-container input[type="password"],
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container input[type="submit"],
+        .form-container button[type="button"] {
+            background: #000;
+            color: #fff;
+            border: 0;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            margin-top: 10px;
+        }
+
+        .form-container input[type="submit"]:hover,
+        .form-container button[type="button"]:hover {
+            background: #FFD700;
+            color: #000;
+        }
+
+        .form-container button.close {
+            background: #ccc;
+            color: #333;
+            border: 0;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            float: right;
+        }
+
+        .form-container button.close:hover {
+            background: #999;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="manage_addresses.html">Manage Addresses</a>
+        <a href="manage_degrees.html">Manage Degrees</a>
+        <a href="manage_employment.html">Manage Employment</a>
+        <a href="manage_donations.html">Manage Donations</a>
+        <a href="manage_skillset.html">Manage Skillset</a>
+    </nav>
+    <div class="container">
+        <div class="form-container">
+            <h2>Donation Information</h2>
+            <form id="donationFormContent">
+                <label for="donationAmount">Donation Amount:</label>
+                <input type="text" id="donationAmount" name="donationAmount"><br>
+
+                <label for="donationDate">Date:</label>
+                <input type="date" id="donationDate" name="donationDate"><br>
+
+                <button type="button" onclick="saveDonation()">Save</button>
+                <button class="close" onclick="closeForm('donationForm')">Close</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function saveDonation() {
+            alert('Donation information saved!');
+            // Add code to save donation data
+        }
+
+        function closeForm(formId) {
+            document.getElementById(formId).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
