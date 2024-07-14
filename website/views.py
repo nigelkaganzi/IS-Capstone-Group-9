@@ -16,4 +16,4 @@ def home():
 @views.route('/alumni')
 @login_required
 def alumni():
-    return render_template("alumni.html")
+    return render_template("alumni.html", user=current_user)

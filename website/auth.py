@@ -24,7 +24,7 @@ def login():
                 flash('Incorrect password, try again', category='error')
         else:
             print("user does not exist")  # Debug print
-            flash('User does not exist.', category='error')
+            flash('Incorrect username.', category='error')
     return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
