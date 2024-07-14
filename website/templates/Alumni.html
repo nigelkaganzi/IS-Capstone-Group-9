@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +46,7 @@
     </style>
 
 </head>
+{% block content %}
 <body>
     <div>
         <button onclick="openForm('addressForm')">Manage Addresses</button>
@@ -168,7 +170,7 @@
 
         // Functions to handle saving data
         function saveAddress() {
-            // Add code to save address data
+            // if submit sql ( insert into Address )
             closeForm('addressForm');
         }
 
@@ -194,3 +196,4 @@
     </script>
 </body>
 </html>
+{%endblock%}
