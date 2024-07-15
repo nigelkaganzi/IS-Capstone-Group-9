@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Alumni List{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('views.alumni_list') }}">
+    <div class="form-group">
+        <input type="text" name="search" class="form-control" placeholder="Search alumni...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    
+</form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Alumni ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Ethnicity</th>
+                <th>Website</th>
+                <th>LinkedIn</th>
+                <th>Twitter</th>
+                <th>Facebook</th>
+                <th>Instagram</th>
+                <th>Guest Speaker?</th>
+                <th>Newsletter?</th>
+                <th>Thumbnail Image</th>
+                <th>Normal Image</th>
+                <th>Description</th>
+                <th>Deceased?</th>
+                <th>Deceased Date</th>
+                <th>Deceased Notes</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% if Alumni %}
+                {% for alum in Alumni %}
+                <tr>
+                    <td>{{ alum.alumniID }}</td>
+                    <td>{{ alum.fName }}</td>
+                    <td>{{ alum.lName }}</td>
+                    <td>{{ alum.phone }}</td>
+                    <td>{{ alum.email }}</td>
+                    <td>{{ alum.DOB }}</td>
+                    <td>{{ alum.gender }}</td>
+                    <td>{{ alum.ethnicity }}</td>
+                    <td>{{ alum.website }}</td>
+                    <td>{{ alum.linkedIn_link }}</td>
+                    <td>{{ alum.twitter_link }}</td>
+                    <td>{{ alum.facebook_link }}</td>
+                    <td>{{ alum.instagram_link }}</td>
+                    <td>{{ alum.guestSpeakerYN }}</td>
+                    <td>{{ alum.newsLetterYN }}</td>
+                    <td>{{ alum.imageThumb }}</td>
+                    <td>{{ alum.imageNormal }}</td>
+                    <td>{{ alum.description }}</td>
+                    <td>{{ alum.deceasedYN }}</td>
+                    <td>{{ alum.deceasedDT }}</td>
+                    <td>{{ alum.deceasedNotes }}</td>
+                    
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="4">No alumni found.</td></tr>
+            {% endif %} 
+            
+        </tbody>
+    </table>
+</body>
+</html>
+
+</html>
+
+{% endblock %}
+
+
+

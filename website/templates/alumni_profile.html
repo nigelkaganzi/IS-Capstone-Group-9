@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alumni Profile</title>
+</head>
+<body>
+    <h1>{{ alumni.fName }} {{ alumni.lName }}</h1>
+    <p>Phone: {{ alumni.phone }}</p>
+    <p>Email: {{ alumni.email }}</p>
+    <p>Date of Birth: {{ alumni.DOB }}</p>
+    <p>Gender: {{ alumni.gender }}</p>
+    <p>Ethnicity: {{ alumni.ethnicity }}</p>
+    <p>Website: {{ alumni.website }}</p>
+    <p>LinkedIn: {{ alumni.linkedIn_link }}</p>
+    <p>Twitter: {{ alumni.twitter_link }}</p>
+    <p>Facebook: {{ alumni.facebook_link }}</p>
+    <p>Instagram: {{ alumni.instagram_link }}</p>
+    <p>Guest Speaker: {{ alumni.guestSpeakerYN }}</p>
+    <p>Newsletter: {{ alumni.newsLetterYN }}</p>
+    <p>Description: {{ alumni.description }}</p>
+    <p>Deceased: {{ alumni.deceasedYN }}</p>
+    <p>Deceased Date: {{ alumni.deceasedDT }}</p>
+    <p>Deceased Notes: {{ alumni.deceasedNotes }}</p>
+    
+    <h2>Degrees</h2>
+    <ul>
+        {% for degree in degrees %}
+            <li>{{ degree.degreeType }} from {{ degree.institution }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Employment History</h2>
+    <ul>
+        {% for employment in employments %}
+            <li>{{ employment.position }} at {{ employment.company }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('views.alumni_update', id=alumni.alumniID) }}">Edit</a>
+    <form method="POST" action="{{ url_for('views.alumni_delete', id=alumni.alumniID) }}">
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>
+

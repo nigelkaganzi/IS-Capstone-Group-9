@@ -21,10 +21,10 @@ def login():
                 return redirect(url_for('views.home'))
             else:
                 print("Incorrect password")  # Debug print
-                flash('Incorrect password, try again', category='error')
+                flash('Incorrect username or passowrd, try again', category='error')
         else:
             print("user does not exist")  # Debug print
-            flash('Incorrect username.', category='error')
+            flash('Incorrect username or password, try again.', category='error')
     return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
