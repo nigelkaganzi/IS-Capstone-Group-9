@@ -1,46 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Alumni Profile</title>
-</head>
-<body>
-    <h1>{{ alumni.fName }} {{ alumni.lName }}</h1>
-    <p>Phone: {{ alumni.phone }}</p>
-    <p>Email: {{ alumni.email }}</p>
-    <p>Date of Birth: {{ alumni.DOB }}</p>
-    <p>Gender: {{ alumni.gender }}</p>
-    <p>Ethnicity: {{ alumni.ethnicity }}</p>
-    <p>Website: {{ alumni.website }}</p>
-    <p>LinkedIn: {{ alumni.linkedIn_link }}</p>
-    <p>Twitter: {{ alumni.twitter_link }}</p>
-    <p>Facebook: {{ alumni.facebook_link }}</p>
-    <p>Instagram: {{ alumni.instagram_link }}</p>
-    <p>Guest Speaker: {{ alumni.guestSpeakerYN }}</p>
-    <p>Newsletter: {{ alumni.newsLetterYN }}</p>
-    <p>Description: {{ alumni.description }}</p>
-    <p>Deceased: {{ alumni.deceasedYN }}</p>
-    <p>Deceased Date: {{ alumni.deceasedDT }}</p>
-    <p>Deceased Notes: {{ alumni.deceasedNotes }}</p>
-    
-    <h2>Degrees</h2>
-    <ul>
-        {% for degree in degrees %}
-            <li>{{ degree.degreeType }} from {{ degree.institution }}</li>
-        {% endfor %}
-    </ul>
+{% extends "base.html" %}
+{% block title %}Alumni Profile{% endblock %}
 
-    <h2>Employment History</h2>
-    <ul>
-        {% for employment in employments %}
-            <li>{{ employment.position }} at {{ employment.company }}</li>
-        {% endfor %}
-    </ul>
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">{{ alumni.fName }} {{ alumni.lName }}</h2>
+    <p><strong>Alumni ID</strong> {{ alumni.alumniID }}</p>
+    <p><strong>Email:</strong> {{ alumni.email }}</p>
+    <p><strong>Phone:</strong> {{ alumni.phone }}</p>
+    <p><strong>Date of Birth:</strong> {{ alumni.DOB }}</p>
+    <p><strong>Gender:</strong> {{ alumni.gender }}</p>
+    <p><strong>Ethnicity:</strong> {{ alumni.ethnicity }}</p>
+    <p><strong>Website:</strong> <a href="{{ alumni.website }}" target="_blank">{{ alumni.website }}</a></p>
+    <p><strong>LinkedIn:</strong> <a href="{{ alumni.linkedIn_link }}" target="_blank">{{ alumni.linkedIn_link }}</a></p>
+    <p><strong>Twitter:</strong> <a href="{{ alumni.twitter_link }}" target="_blank">{{ alumni.twitter_link }}</a></p>
+    <p><strong>Facebook:</strong> <a href="{{ alumni.facebook_link }}" target="_blank">{{ alumni.facebook_link }}</a></p>
+    <p><strong>Instagram:</strong> <a href="{{ alumni.instagram_link }}" target="_blank">{{ alumni.instagram_link }}</a></p>
+    <p><strong>Description:</strong> {{ alumni.description }}</p>
 
-    <a href="{{ url_for('views.alumni_update', id=alumni.alumniID) }}">Edit</a>
-    <form method="POST" action="{{ url_for('views.alumni_delete', id=alumni.alumniID) }}">
-        <button type="submit">Delete</button>
+    <h3 class="mt-4">Actions</h3>
+    <a href="{{ url_for('views.alumni_update', id=alumni.alumniID) }}" class="btn btn-warning">Edit Alumni</a>
+    <form method="POST" action="{{ url_for('views.alumni_delete', id=alumni.alumniID) }}" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Delete Alumni</button>
     </form>
-</body>
-</html>
+
+    <h3 class="mt-4">Related Information</h3>
+</div>
+{% endblock %}
 

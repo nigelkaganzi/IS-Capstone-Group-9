@@ -2,7 +2,7 @@ from . import db
 from flask_login import UserMixin
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
-    UID = db.Column(db.String(20), primary_key=True)
+    UID = db.Column(db.String(20), primary_key=True,)
     password = db.Column(db.String(20), nullable=False)
     fName = db.Column(db.String(20), nullable=False)
     lName = db.Column(db.String(20), nullable=False)
@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
         return self.UID
 class Alumni(db.Model):
     __tablename__ = 'alumni'
-    alumniID = db.Column(db.Integer, primary_key=True)
+    alumniID = db.Column(db.Integer, primary_key=True,autoincrement=True)
     fName = db.Column(db.String(20), nullable=False)
     lName = db.Column(db.String(20), nullable=False)
     phone = db.Column(db.String(10))

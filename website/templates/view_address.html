@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}View Addresses{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Addresses</h2>
+    {% for address in addresses %}
+        <div class="card mt-2">
+            <div class="card-body">
+                <p>{{ address.street }}, {{ address.city }}, {{ address.state }} {{ address.zip_code }}</p>
+                <a href="{{ url_for('update_address', id=address.id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ url_for('delete_address', id=address.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('alumni_profile', id=alumni_id) }}" class="btn btn-secondary mt-3">Back to Profile</a>
+</div>
+{% endblock %}

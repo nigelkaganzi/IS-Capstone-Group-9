@@ -19,7 +19,7 @@ def alumni_list():
 
     if request.method == 'POST':
         search_term = request.form.get('search', '').strip()
-        print("Search Term:", search_term)  # Debugging statement
+        
         if search_term:
             alumni = Alumni.query.filter(
                 or_(
@@ -32,9 +32,6 @@ def alumni_list():
             flash('Please enter a search term.', 'warning')
     else:
         alumni = Alumni.query.all()
-
-    
-    print("Alumni List:", alumni)  # Debugging statement
     return render_template("alumni_list.html", alumni=alumni, user=current_user)
 
 @views.route('/alumni/new', methods=['GET', 'POST'])
@@ -43,6 +40,7 @@ def alumni_create():
     form = AlumniForm()
     if form.validate_on_submit():
         new_alumni = Alumni(
+            alumniID=form.alumniID.data,
             fName=form.fName.data,
             lName=form.lName.data,
             phone=form.phone.data,
@@ -76,6 +74,7 @@ def alumni_update(id):
     alumni = Alumni.query.get_or_404(id)
     form = AlumniForm()
     if form.validate_on_submit():
+        alumni.alumniID = form.alumniID.data
         alumni.fName = form.fName.data
         alumni.lName = form.lName.data
         alumni.phone = form.phone.data
@@ -135,7 +134,4 @@ def alumni_delete(id):
 @login_required
 def alumni_profile(id):
     alumni = Alumni.query.get_or_404(id)
-    degrees = Degree.query.filter_by(alumniID=id).all()
-    employments = Employment.query.filter_by(alumniID=id).all()
-    return render_template('alumni_profile.html', alumni=alumni, degrees=degrees, employments=employments, user=current_user)
-
+    return render_template('alumni_profile.html', alumni=alumni, user=current_user)

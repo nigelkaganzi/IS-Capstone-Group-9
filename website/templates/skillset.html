@@ -1,32 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Skillset - Alumni Management System</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="manage_addresses.html">Manage Addresses</a>
-        <a href="manage_degrees.html">Manage Degrees</a>
-        <a href="manage_employment.html">Manage Employment</a>
-        <a href="manage_donations.html">Manage Donations</a>
-        <a href="manage_skillset.html">Manage Skillset</a>
-    </nav>
-    <div class="container">
-        <div class="form-container">
-            <h2>Skillset Information</h2>
-            <form id="skillsetFormContent">
-                <label for="skill">Skill:</label>
-                <input type="text" id="skill" name="skill"><br>
+{% extends "base.html" %}
+{% block title %}Update Skillset{% endblock %}
 
-                <button type="button" onclick="saveSkill()">Save</button>
-                <button class="close" onclick="closeForm('skillsetForm')">Close</button>
-            </form>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+{% block content %}
+<div class="container mt-5">
+    <h2>Update Skillset</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.skill_name.label }} {{ form.skill_name(class='form-control') }}
+        {{ form.proficiency.label }} {{ form.proficiency(class='form-control') }}
+        <button type="submit" class="btn btn-primary mt-3">Update Skillset</button>
+    </form>
+</div>
+{% endblock %}

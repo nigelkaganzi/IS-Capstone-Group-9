@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}View Degrees{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Degrees</h2>
+    {% for degree in degrees %}
+        <div class="card mt-2">
+            <div class="card-body">
+                <p><strong>Degree Type:</strong> {{ degree.degree_type }}</p>
+                <p><strong>Field of Study:</strong> {{ degree.field_of_study }}</p>
+                <p><strong>Institution:</strong> {{ degree.institution }}</p>
+                <p><strong>Graduation Year:</strong> {{ degree.graduation_year }}</p>
+                <a href="{{ url_for('views.update_degree', id=degree.id) }}" class="btn btn-warning">Edit</a>
+                <form method="POST" action="{{ url_for('views.delete_degree', id=degree.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this degree?');">Delete</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('views.alumni_profile', id=alumni_id) }}" class="btn btn-secondary mt-3">Back to Profile</a>
+</div>
+{% endblock %}

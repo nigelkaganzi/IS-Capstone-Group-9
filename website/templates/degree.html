@@ -1,38 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Degrees - Alumni Management System</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="manage_addresses.html">Manage Addresses</a>
-        <a href="manage_degrees.html">Manage Degrees</a>
-        <a href="manage_employment.html">Manage Employment</a>
-        <a href="manage_donations.html">Manage Donations</a>
-        <a href="manage_skillset.html">Manage Skillset</a>
-    </nav>
-    <div class="container">
-        <div class="form-container">
-            <h2>Degree Information</h2>
-            <form id="degreeFormContent">
-                <label for="degreeType">Degree Type:</label>
-                <input type="text" id="degreeType" name="degreeType"><br>
+{% extends "base.html" %}
+{% block title %}Update Degree{% endblock %}
 
-                <label for="degreeInstitution">Institution:</label>
-                <input type="text" id="degreeInstitution" name="degreeInstitution"><br>
-
-                <label for="degreeYear">Year:</label>
-                <input type="text" id="degreeYear" name="degreeYear"><br>
-
-                <button type="button" onclick="saveDegree()">Save</button>
-                <button class="close" onclick="closeForm('degreeForm')">Close</button>
-            </form>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+{% block content %}
+<div class="container mt-5">
+    <h2>Update Degree</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.degree_type.label }} {{ form.degree_type(class='form-control') }}
+        {{ form.field_of_study.label }} {{ form.field_of_study(class='form-control') }}
+        {{ form.institution.label }} {{ form.institution(class='form-control') }}
+        {{ form.graduation_year.label }} {{ form.graduation_year(class='form-control') }}
+        <button type="submit" class="btn btn-primary mt-3">Update Degree</button>
+    </form>
+</div>
+{% endblock %}
