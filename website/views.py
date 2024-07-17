@@ -289,3 +289,98 @@ def delete_degree(id):
     db.session.commit()
     flash('Degree deleted successfully!', 'success')
     return redirect(url_for('views.view_degrees', alumni_id=degree.alumniID))
+
+# Donations Page Functions
+@views.route('/alumni/<int:alumni_id>/donations', methods=['GET'])
+@login_required
+def view_donations(alumni_id):
+    alumni = Alumni.query.get_or_404(alumni_id)
+    donations = Donations.query.filter_by(alumniID=alumni_id).all()
+    return render_template('view_donations.html', donations=donations, alumni=alumni, alumni_id=alumni_id, user=current_user)
+
+@views.route('/alumni/<int:alumni_id>/donations/add', methods=['GET', 'POST'])
+@login_required
+def add_donation(alumni_id):
+    form = DonationsForm()
+    if form.validate_on_submit():
+        new_donation = Donations(
+            alumniID=alumni_id,
+            donationID=form.donationID.data,
+            donationAmt=form.donationAmt.data,
+            donationDT=form.donationDT.data,
+            reason=form.reason.data,
+            description=form.description.data
+        )
+        db.session.add(new_donation)
+        db.session.commit()
+        flash('New donation added successfully!', 'success')
+        return redirect(url_for('views.view_donations', alumni_id=alumni_id))
+    return render_template('add_donation.html', form=form, alumni_id=alumni_id, user=current_user)
+
+@views.route('/donation/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+def update_donation(id):
+    donation = Donations.query.get_or_404(id)
+    form = DonationsForm(obj=donation)
+    if form.validate_on_submit():
+        form.populate_obj(donation)
+        db.session.commit()
+        flash('Donation updated successfully!', 'success')
+        return redirect(url_for('views.view_donations', alumni_id=donation.alumniID))
+    return render_template('update_donation.html', form=form,   donation=donation, user=current_user)
+
+@views.route('/donation/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_donation(id):
+    donation = Donations.query.get_or_404(id)
+    db.session.delete(donation)
+    db.session.commit()
+    flash('Donation deleted successfully!', 'success')
+    return redirect(url_for('views.view_donations', alumni_id=donation.alumniID))
+
+#Skillset Page Functions
+@views.route('/alumni/<int:alumni_id>/skillsets', methods=['GET'])
+@login_required
+def view_skillsets(alumni_id):
+    alumni = Alumni.query.get_or_404(alumni_id)
+    skillsets = Skillset.query.filter_by(alumniID=alumni_id).all()
+    return render_template('view_skillsets.html', skillsets=skillsets,alumni=alumni, alumni_id=alumni_id, user=current_user)
+
+@views.route('/alumni/<int:alumni_id>/skillsets/add', methods=['GET', 'POST'])
+@login_required
+def add_skillset(alumni_id):
+    form = SkillsetForm()
+    if form.validate_on_submit():
+        new_skillset = Skillset(
+            alumniID=alumni_id,
+            SID=form.SID.data,
+            skill=form.skill.data,
+            proficiency=form.proficiency.data,
+            description=form.description.data
+        )
+        db.session.add(new_skillset)
+        db.session.commit()
+        flash('New skillset added successfully!', 'success')
+        return redirect(url_for('views.view_skillsets', alumni_id=alumni_id))
+    return render_template('add_skillset.html', form=form, alumni_id=alumni_id, user=current_user)
+
+@views.route('/skillset/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+def update_skillset(id):
+    skillset = Skillset.query.get_or_404(id)
+    form = SkillsetForm(obj=skillset)
+    if form.validate_on_submit():
+        form.populate_obj(skillset)
+        db.session.commit()
+        flash('Skillset updated successfully!', 'success')
+        return redirect(url_for('views.view_skillsets', alumni_id=skillset.alumniID))
+    return render_template('update_skillset.html', form=form, skillset=skillset, user=current_user)
+
+@views.route('/skillset/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_skillset(id):
+    skillset = Skillset.query.get_or_404(id)
+    db.session.delete(skillset)
+    db.session.commit()
+    flash('Skillset deleted successfully!', 'success')
+    return redirect(url_for('views.view_skillsets', alumni_id=skillset.alumniID))

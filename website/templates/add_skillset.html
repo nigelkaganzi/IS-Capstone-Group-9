@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Add Skillset{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add New Skillset</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.SID.label }} {{ form.SID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.alumniID.label }} {{ form.alumniID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.skill.label }} {{ form.skill(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.proficiency.label }} {{ form.proficiency(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label }} {{ form.description(class='form-control') }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Skillset</button>
+    </form>
+    <a href="{{ url_for('views.view_skillsets', alumni_id=alumni_id) }}" class="btn btn-secondary mt-3">Back to Skillsets</a>
+</div>
+{% endblock %}

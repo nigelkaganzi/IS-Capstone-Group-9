@@ -21,7 +21,7 @@ def login():
                 return redirect(url_for('views.home'))
             else:
                 print("Incorrect password")  # Debug print
-                flash('Incorrect username or passowrd, try again', category='error')
+                flash('Incorrect username or passoword, try again', category='error')
         else:
             print("user does not exist")  # Debug print
             flash('Incorrect username or password, try again.', category='error')

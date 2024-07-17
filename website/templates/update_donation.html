@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Update Donation{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Update Donation</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.alumniID.label }} {{ form.alumniID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.donationAmt.label }} {{ form.donationAmt(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.donationDT.label }} {{ form.donationDT(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.reason.label }} {{ form.reason(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label }} {{ form.description(class='form-control') }}
+        </div>
+        <button type="submit" class="btn btn-primary">Update Donation</button>
+    </form>
+    <a href="{{ url_for('views.view_donations', alumni_id=donation.alumniID) }}" class="btn btn-secondary mt-3">Back to Donations</a>
+</div>
+{% endblock %}

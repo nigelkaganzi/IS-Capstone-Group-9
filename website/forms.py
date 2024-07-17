@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField, BooleanField, IntegerField
+from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField, BooleanField, IntegerField,DecimalField
 from wtforms.validators import DataRequired, Email, Length, Optional
 
 class AlumniForm(FlaskForm):
@@ -63,11 +63,18 @@ class DegreeForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class SkillsetForm(FlaskForm):
-    skill_name = StringField('Skill Name', validators=[DataRequired()])
-    proficiency = StringField('Proficiency')  # Could be a dropdown or radio field
+    SID = IntegerField('Skillset ID', validators=[DataRequired()])
+    alumniID = IntegerField('Alumni ID', validators=[DataRequired()])
+    skill = StringField('Skill', validators=[DataRequired(), Length(max=50)])
+    proficiency = StringField('Proficiency', validators=[Optional(), Length(max=10)])
+    description = StringField('Description', validators=[Optional(), Length(max=100)])
     submit = SubmitField('Submit')
-
+    
 class DonationsForm(FlaskForm):
-    amount = StringField('Amount', validators=[DataRequired()])  # Consider using FloatField for numerical input
-    donation_date = StringField('Donation Date', validators=[DataRequired()])  # Consider using a DateField
+    donationID = IntegerField('Donation ID', validators=[DataRequired()])
+    alumniID = IntegerField('Alumni ID', validators=[DataRequired()])
+    donationAmt = DecimalField('Donation Amount', places=2, validators=[DataRequired()])
+    donationDT = DateField('Donation Date', format='%Y-%m-%d', validators=[DataRequired()])
+    reason = StringField('Reason', validators=[Optional(), Length(max=200)])
+    description = StringField('Description', validators=[Optional(), Length(max=200)])
     submit = SubmitField('Submit')

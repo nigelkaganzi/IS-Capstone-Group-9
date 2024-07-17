@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}View Skillsets{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Skillsets for Alumni ID: {{ alumni_id }}</h2>
+    {% for skillset in skillsets %}
+        <div class="card mt-2">
+            <div class="card-body">
+                <p><strong>Skill:</strong> {{ skillset.skill }}</p>
+                <p><strong>Proficiency:</strong> {{ skillset.proficiency }}</p>
+                <p><strong>Description:</strong> {{ skillset.description }}</p>
+                <a href="{{ url_for('views.update_skillset', id=skillset.SID) }}" class="btn btn-warning">Edit</a>
+                <form method="POST" action="{{ url_for('views.delete_skillset', id=skillset.SID) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('views.add_skillset', alumni_id=alumni_id) }}" class="btn btn-primary mt-3">Add Skillset</a>
+    <a href="{{ url_for('views.alumni_profile', id=alumni_id) }}" class="btn btn-secondary mt-3">Back to Profile</a>
+</div>
+{% endblock %}
