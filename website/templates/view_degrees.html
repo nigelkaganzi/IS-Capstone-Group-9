@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}View Degrees{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Degrees for Alumni ID: {{ alumni_id }}</h2>
+    {% for degree in degrees %}
+        <div class="card mt-2">
+            <div class="card-body">
+                <p><strong>Major:</strong> {{ degree.major }}</p>
+                <p><strong>Minor:</strong> {{ degree.minor }}</p>
+                <p><strong>Graduation Date:</strong> {{ degree.graduationDT }}</p>
+                <p><strong>University:</strong> {{ degree.university }}</p>
+                <p><strong>City:</strong> {{ degree.city }}</p>
+                <p><strong>State:</strong> {{ degree.state }}</p>
+                <a href="{{ url_for('views.update_degree', id=degree.degreeID) }}" class="btn btn-warning">Edit</a>
+                <form method="POST" action="{{ url_for('views.delete_degree', id=degree.degreeID) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+    <a href="{{ url_for('views.add_degree', alumni_id=alumni_id) }}" class="btn btn-primary mt-3">Add Degree</a>
+    <a href="{{ url_for('views.alumni_profile', id=alumni_id) }}" class="btn btn-secondary mt-3">Back to Profile</a>
+</div>
+{% endblock %}

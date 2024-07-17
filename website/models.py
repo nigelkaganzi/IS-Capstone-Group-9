@@ -39,7 +39,7 @@ class Alumni(db.Model):
 
 class Address(db.Model):
     __tablename__ = 'address'
-    addressID = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    addressID = db.Column(db.Integer, primary_key=True,)
     alumniID = db.Column(db.Integer, db.ForeignKey('alumni.alumniID'), nullable=False)
     address = db.Column(db.String(50))
     city = db.Column(db.String(50))

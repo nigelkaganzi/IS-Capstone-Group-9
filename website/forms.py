@@ -50,11 +50,16 @@ class EmploymentForm(FlaskForm):
     currentYN = SelectField('Currently Employed', choices=[('Y', 'Yes'), ('N', 'No')], validators=[DataRequired()])
     notes = TextAreaField('Notes', validators=[Optional(), Length(max=100)])
     submit=SubmitField('Submit')
+    
 class DegreeForm(FlaskForm):
-    degree_type = StringField('Degree Type', validators=[DataRequired()])
-    field_of_study = StringField('Field of Study', validators=[DataRequired()])
-    institution = StringField('Institution', validators=[DataRequired()])
-    graduation_year = DateField('Graduation Year', validators=[DataRequired()])  # Consider using IntegerField
+    degreeID = IntegerField('Degree ID', validators=[DataRequired()])
+    alumniID = IntegerField('Alumni ID', validators=[DataRequired()])
+    major = StringField('Major', validators=[DataRequired(), Length(max=50)])
+    minor = StringField('Minor', validators=[Optional(), Length(max=50)])
+    graduationDT = DateField('Graduation Date', format='%Y-%m-%d', validators=[Optional()])
+    university = StringField('University', validators=[Optional(), Length(max=100)])
+    city = StringField('City', validators=[Optional(), Length(max=50)])
+    state = StringField('State', validators=[Optional(), Length(max=2)])
     submit = SubmitField('Submit')
 
 class SkillsetForm(FlaskForm):

@@ -239,3 +239,53 @@ def delete_employment(id):
     db.session.commit()
     flash('Employment deleted successfully!', 'success')
     return redirect(url_for('views.view_employment', alumni_id=employment.alumniID))
+
+# Degree Page Functions
+@views.route('/alumni/<int:alumni_id>/degrees', methods=['GET'])
+@login_required
+def view_degrees(alumni_id):
+    alumni = Alumni.query.get_or_404(alumni_id)
+    degrees = Degree.query.filter_by(alumniID=alumni_id).all()
+    return render_template('view_degrees.html', degrees=degrees, alumni=alumni, alumni_id=alumni_id, user=current_user)
+
+@views.route('/alumni/<int:alumni_id>/degrees/add', methods=['GET', 'POST'])
+@login_required
+def add_degree(alumni_id):
+    form = DegreeForm()
+    if form.validate_on_submit():
+        new_degree = Degree(
+            alumniID=alumni_id,
+            degreeID=form.degreeID.data,
+            major=form.major.data,
+            minor=form.minor.data,
+            graduationDT=form.graduationDT.data,
+            university=form.university.data,
+            city=form.city.data,
+            state=form.state.data
+        )
+        db.session.add(new_degree)
+        db.session.commit()
+        flash('New degree added successfully!', 'success')
+        return redirect(url_for('views.view_degrees', alumni_id=alumni_id))
+    return render_template('add_degree.html', form=form, alumni_id=alumni_id, user=current_user)
+
+@views.route('/degree/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+def update_degree(id):
+    degree = Degree.query.get_or_404(id)
+    form = DegreeForm(obj=degree)
+    if form.validate_on_submit():
+        form.populate_obj(degree)
+        db.session.commit()
+        flash('Degree updated successfully!', 'success')
+        return redirect(url_for('views.view_degrees', alumni_id=degree.alumniID))
+    return render_template('update_degree.html', form=form, degree=degree, user=current_user)
+
+@views.route('/degree/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_degree(id):
+    degree = Degree.query.get_or_404(id)
+    db.session.delete(degree)
+    db.session.commit()
+    flash('Degree deleted successfully!', 'success')
+    return redirect(url_for('views.view_degrees', alumni_id=degree.alumniID))

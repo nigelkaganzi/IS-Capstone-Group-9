@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Add Degree{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add New Degree</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.degreeID.label }} {{ form.degreeID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.alumniID.label }} {{ form.alumniID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.major.label }} {{ form.major(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.minor.label }} {{ form.minor(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.graduationDT.label }} {{ form.graduationDT(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.university.label }} {{ form.university(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.city.label }} {{ form.city(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.state.label }} {{ form.state(class='form-control') }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Degree</button>
+    </form>
+    <a href="{{ url_for('views.view_degrees', alumni_id=alumni_id) }}" class="btn btn-secondary mt-3">Back to Degrees</a>
+</div>
+{% endblock %}
