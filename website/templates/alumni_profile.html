@@ -24,7 +24,7 @@
     </form>
     <h3 class="mt-4">Related Information</h3>
     <a href="{{ url_for('views.view_addresses',alumni_id=alumni.alumniID) }}" class="btn btn-primary">View Addresses</a>
-
+    <a href="{{ url_for('views.view_employment', alumni_id=alumni.alumniID) }}" class="btn btn-primary">View Employment</a>
 </div>
 {% endblock %}
 

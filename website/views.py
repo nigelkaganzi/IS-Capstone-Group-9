@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for, flash, redirect, request
 from flask_login import login_required, current_user
 from .models import Alumni, Address, User, Employment, Degree, Skillset, Donations, Newsletter, SentTo
 from . import db
-from .forms import AlumniForm, AddressForm
+from .forms import AlumniForm, AddressForm,EmploymentForm, DegreeForm, DonationsForm, SkillsetForm
 from sqlalchemy import or_
 
 views = Blueprint('views', __name__)
@@ -138,6 +138,13 @@ def alumni_delete(id):
     return redirect(url_for('views.alumni_list'))
 
 # Address Page Functions
+@views.route('/alumni/<int:alumni_id>/addresses', methods=['GET'])
+@login_required
+def view_addresses(alumni_id):
+    alumni = Alumni.query.get_or_404(alumni_id)
+    addresses = Address.query.filter_by(alumniID=alumni_id).all()
+    return render_template('view_address.html', addresses=addresses, alumni=alumni, alumni_id=alumni_id, user=current_user)
+
 @views.route('/alumni/<int:alumni_id>/address/add', methods=['GET', 'POST'])
 @login_required
 def add_address(alumni_id):
@@ -159,13 +166,6 @@ def add_address(alumni_id):
         return redirect(url_for('views.view_addresses', alumni_id=alumni_id))
     return render_template('add_address.html', form=form, alumni_id=alumni_id, user=current_user)
 
-@views.route('/alumni/<int:alumni_id>/addresses', methods=['GET'])
-@login_required
-def view_addresses(alumni_id):
-    alumni = Alumni.query.get_or_404(alumni_id)
-    addresses = Address.query.filter_by(alumniID=alumni_id).all()
-    return render_template('view_address.html', addresses=addresses, alumni=alumni, alumni_id=alumni_id, user=current_user)
-
 @views.route('/address/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 def update_address(id):
@@ -186,3 +186,56 @@ def delete_address(id):
     db.session.commit()
     flash('Address deleted successfully!', 'success')
     return redirect(url_for('views.view_addresses', alumni_id=address.alumniID))
+
+# Employement Page Functions
+@views.route('/alumni/<int:alumni_id>/employment', methods=['GET'])
+@login_required
+def view_employment(alumni_id):
+    alumni = Alumni.query.get_or_404(alumni_id)
+    employments = Employment.query.filter_by(alumniID=alumni_id).all()
+    return render_template('view_employment.html', employments=employments, alumni=alumni, alumni_id=alumni_id, user=current_user)
+
+@views.route('/alumni/<int:alumni_id>/employment/add', methods=['GET', 'POST'])
+@login_required
+def add_employment(alumni_id):
+    form = EmploymentForm()
+    if form.validate_on_submit():
+        new_employment = Employment(
+            alumniID=alumni_id,
+            EID=form.EID.data,
+            company=form.company.data,
+            city=form.city.data,
+            state=form.state.data,
+            zip=form.zip.data,
+            jobTitle=form.jobTitle.data,
+            startDate=form.startDate.data,
+            endDate=form.endDate.data,
+            currentYN=form.currentYN.data,
+            notes=form.notes.data
+        )
+        db.session.add(new_employment)
+        db.session.commit()
+        flash('New employment added successfully!', 'success')
+        return redirect(url_for('views.view_employment', alumni_id=alumni_id))
+    return render_template('add_employment.html', form=form, alumni_id=alumni_id, user=current_user)
+
+@views.route('/employment/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+def update_employment(id):
+    employment = Employment.query.get_or_404(id)
+    form = EmploymentForm(obj=employment)
+    if form.validate_on_submit():
+        form.populate_obj(employment)
+        db.session.commit()
+        flash('Employment updated successfully!', 'success')
+        return redirect(url_for('views.view_employment', alumni_id=employment.alumniID))
+    return render_template('update_employment.html', form=form, employment=employment, user=current_user)
+
+@views.route('/employment/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_employment(id):
+    employment = Employment.query.get_or_404(id)
+    db.session.delete(employment)
+    db.session.commit()
+    flash('Employment deleted successfully!', 'success')
+    return redirect(url_for('views.view_employment', alumni_id=employment.alumniID))

@@ -35,16 +35,21 @@ class AddressForm(FlaskForm):
     zipCode = StringField('Zip Code', validators=[DataRequired(),Length(max=10)])
     activeYN = StringField('Active', validators=[DataRequired(),Length(max=1)])
     primaryYN = StringField('Primary', validators=[DataRequired(),Length(max=1)])
-    submit = SubmitField('Update Address')    
+    submit = SubmitField('Submit')    
 
 class EmploymentForm(FlaskForm):
-    company = StringField('Company', validators=[DataRequired()])
-    job_title = StringField('Job Title', validators=[DataRequired()])
-    start_date = DateField('Start Date', validators=[DataRequired()])  # Consider using a DateField
-    end_date = DateField('End Date')  # Optional, consider using a DateField
-    current_job = BooleanField('Is this your current job?')
-    submit = SubmitField('Submit')
-
+    EID = IntegerField('Employment ID',validators=[DataRequired()])
+    alumniID = IntegerField('Alumni ID', validators=[DataRequired()])
+    company = StringField('Company', validators=[DataRequired(), Length(max=50)])
+    city = StringField('City', validators=[Optional(), Length(max=50)])
+    state = StringField('State', validators=[Optional(), Length(max=2)])
+    zip = StringField('ZIP Code', validators=[Optional(), Length(max=10)])
+    jobTitle = StringField('Job Title', validators=[Optional(), Length(max=20)])
+    startDate = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
+    endDate = DateField('End Date', format='%Y-%m-%d', validators=[Optional()])
+    currentYN = SelectField('Currently Employed', choices=[('Y', 'Yes'), ('N', 'No')], validators=[DataRequired()])
+    notes = TextAreaField('Notes', validators=[Optional(), Length(max=100)])
+    submit=SubmitField('Submit')
 class DegreeForm(FlaskForm):
     degree_type = StringField('Degree Type', validators=[DataRequired()])
     field_of_study = StringField('Field of Study', validators=[DataRequired()])
