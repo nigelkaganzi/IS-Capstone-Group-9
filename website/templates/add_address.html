@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Add Address{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add New Address</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.addressID.label }} {{ form.addressID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.alumniID.label }} {{ form.alumniID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.address.label }} {{ form.address(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.city.label }} {{ form.city(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.state.label }} {{ form.state(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.zipCode.label }} {{ form.zipCode(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.activeYN.label }} {{ form.activeYN(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.primaryYN.label }} {{ form.primaryYN(class='form-control') }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Address</button>
+    </form>
+    <a href="{{ url_for('views.view_addresses', alumni_id=alumni_id) }}" class="btn btn-secondary mt-3">Back to Addresses</a>
+</div>
+{% endblock %}

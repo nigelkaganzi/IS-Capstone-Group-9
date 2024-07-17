@@ -22,8 +22,9 @@
     <form method="POST" action="{{ url_for('views.alumni_delete', id=alumni.alumniID) }}" style="display:inline;">
         <button type="submit" class="btn btn-danger">Delete Alumni</button>
     </form>
-
     <h3 class="mt-4">Related Information</h3>
+    <a href="{{ url_for('views.view_addresses',alumni_id=alumni.alumniID) }}" class="btn btn-primary">View Addresses</a>
+
 </div>
 {% endblock %}
 

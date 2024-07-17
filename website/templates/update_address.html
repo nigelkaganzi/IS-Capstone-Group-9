@@ -6,11 +6,12 @@
     <h2>Update Address</h2>
     <form method="POST">
         {{ form.hidden_tag() }}
-        {{ form.street.label }} {{ form.street(class='form-control') }}
+        {{ form.address.label }} {{ form.address(class='form-control') }}
         {{ form.city.label }} {{ form.city(class='form-control') }}
         {{ form.state.label }} {{ form.state(class='form-control') }}
-        {{ form.zip_code.label }} {{ form.zip_code(class='form-control') }}
-        {{ form.primary.label }} {{ form.primary(class='form-control') }}
+        {{ form.zipCode.label }} {{ form.zipCode(class='form-control') }}
+        {{ form.activeYN.label }} {{ form.activeYN(class='form-control') }}
+        {{ form.primaryYN.label }} {{ form.primaryYN(class='form-control') }}
         <button type="submit" class="btn btn-primary mt-3">Update Address</button>
     </form>
 </div>

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for, flash, redirect, request
 from flask_login import login_required, current_user
 from .models import Alumni, Address, User, Employment, Degree, Skillset, Donations, Newsletter, SentTo
 from . import db
-from .forms import AlumniForm
+from .forms import AlumniForm, AddressForm
 from sqlalchemy import or_
 
 views = Blueprint('views', __name__)
@@ -11,7 +11,7 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     return render_template("home.html", user=current_user)
-
+# Alumni List page Functions
 @views.route('/alumni', methods=['GET', 'POST'])
 @login_required
 def alumni_list():
@@ -67,6 +67,13 @@ def alumni_create():
         flash('New alumni added successfully!', 'success')
         return redirect(url_for('views.alumni_list'))
     return render_template('alumni_form.html', form=form, user=current_user)
+
+# Alumni Page Functions
+@views.route('/alumni/<int:id>', methods=['GET'])
+@login_required
+def alumni_profile(id):
+    alumni = Alumni.query.get_or_404(id)
+    return render_template('alumni_profile.html', alumni=alumni, user=current_user)
 
 @views.route('/alumni/<int:id>/update', methods=['GET', 'POST'])
 @login_required
@@ -130,8 +137,52 @@ def alumni_delete(id):
     flash('Alumni deleted successfully!', 'success')
     return redirect(url_for('views.alumni_list'))
 
-@views.route('/alumni/<int:id>', methods=['GET'])
+# Address Page Functions
+@views.route('/alumni/<int:alumni_id>/address/add', methods=['GET', 'POST'])
 @login_required
-def alumni_profile(id):
-    alumni = Alumni.query.get_or_404(id)
-    return render_template('alumni_profile.html', alumni=alumni, user=current_user)
+def add_address(alumni_id):
+    form = AddressForm()
+    if form.validate_on_submit():
+        new_address = Address(
+            alumniID=alumni_id,
+            addressID=form.addressID.data,
+            address=form.address.data,
+            city=form.city.data,
+            state=form.state.data,
+            zipCode=form.zipCode.data,
+            activeYN=form.activeYN.data,
+            primaryYN=form.primaryYN.data
+        )
+        db.session.add(new_address)
+        db.session.commit()
+        flash('New address added successfully!', 'success')
+        return redirect(url_for('views.view_addresses', alumni_id=alumni_id))
+    return render_template('add_address.html', form=form, alumni_id=alumni_id, user=current_user)
+
+@views.route('/alumni/<int:alumni_id>/addresses', methods=['GET'])
+@login_required
+def view_addresses(alumni_id):
+    alumni = Alumni.query.get_or_404(alumni_id)
+    addresses = Address.query.filter_by(alumniID=alumni_id).all()
+    return render_template('view_address.html', addresses=addresses, alumni=alumni, alumni_id=alumni_id, user=current_user)
+
+@views.route('/address/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+def update_address(id):
+    address = Address.query.get_or_404(id)
+    form = AddressForm(obj=address)
+    if form.validate_on_submit():
+        form.populate_obj(address)
+        db.session.commit()
+        flash('Address updated successfully!', 'success')
+        return redirect(url_for('views.view_addresses', alumni_id=address.alumniID))
+    return render_template('update_address.html', form=form, user=current_user)
+
+@views.route('/address/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_address(id):
+    address = Address.query.get_or_404(id)
+    db.session.delete(address)
+    db.session.commit()
+    flash('Address deleted successfully!', 'success')
+    return redirect(url_for('views.view_addresses', alumni_id=address.alumniID))

@@ -27,12 +27,14 @@ class AlumniForm(FlaskForm):
     submit = SubmitField('Submit')
     
 class AddressForm(FlaskForm):
-    address = StringField('Address', validators=[DataRequired()])
-    city = StringField('City', validators=[DataRequired()])
-    state = StringField('State', validators=[DataRequired()])
-    zipCode = StringField('Zip Code', validators=[DataRequired()])
-    activeYN = StringField('Active', validators=[DataRequired()])
-    primaryYN = StringField('Primary', validators=[DataRequired()])
+    addressID =IntegerField('Address ID', validators=[DataRequired()])
+    alumniID =IntegerField('Alumni ID', validators=[DataRequired()])
+    address = StringField('Address', validators=[DataRequired(),Length(max=50)])
+    city = StringField('City', validators=[DataRequired(),Length(max=50)])
+    state = StringField('State', validators=[DataRequired(),Length(max=2)])
+    zipCode = StringField('Zip Code', validators=[DataRequired(),Length(max=10)])
+    activeYN = StringField('Active', validators=[DataRequired(),Length(max=1)])
+    primaryYN = StringField('Primary', validators=[DataRequired(),Length(max=1)])
     submit = SubmitField('Update Address')    
 
 class EmploymentForm(FlaskForm):
