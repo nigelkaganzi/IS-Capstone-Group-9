@@ -4,7 +4,7 @@ from .models import Alumni, Address, User, Employment, Degree, Skillset, Donatio
 from . import db
 from .forms import AlumniForm, AddressForm,EmploymentForm, DegreeForm, DonationsForm, SkillsetForm
 from sqlalchemy import or_
-
+from .decorators import role_required
 views = Blueprint('views', __name__)
 
 @views.route('/')
@@ -36,7 +36,7 @@ def alumni_list():
 
 @views.route('/alumni/new', methods=['GET', 'POST'])
 @login_required
-def alumni_create():
+def add_alumni():
     form = AlumniForm()
     if form.validate_on_submit():
         new_alumni = Alumni(
@@ -66,7 +66,7 @@ def alumni_create():
         db.session.commit()
         flash('New alumni added successfully!', 'success')
         return redirect(url_for('views.alumni_list'))
-    return render_template('alumni_form.html', form=form, user=current_user)
+    return render_template('add_alumni.html', form=form, user=current_user)
 
 # Alumni Page Functions
 @views.route('/alumni/<int:id>', methods=['GET'])
@@ -77,6 +77,7 @@ def alumni_profile(id):
 
 @views.route('/alumni/<int:id>/update', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def alumni_update(id):
     alumni = Alumni.query.get_or_404(id)
     form = AlumniForm()
@@ -130,6 +131,7 @@ def alumni_update(id):
 
 @views.route('/alumni/<int:id>/delete', methods=['POST'])
 @login_required
+@role_required('admin')
 def alumni_delete(id):
     alumni = Alumni.query.get_or_404(id)
     db.session.delete(alumni)
@@ -168,6 +170,7 @@ def add_address(alumni_id):
 
 @views.route('/address/<int:id>/update', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def update_address(id):
     address = Address.query.get_or_404(id)
     form = AddressForm(obj=address)
@@ -180,6 +183,7 @@ def update_address(id):
 
 @views.route('/address/<int:id>/delete', methods=['POST'])
 @login_required
+@role_required('admin')
 def delete_address(id):
     address = Address.query.get_or_404(id)
     db.session.delete(address)
@@ -221,6 +225,7 @@ def add_employment(alumni_id):
 
 @views.route('/employment/<int:id>/update', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def update_employment(id):
     employment = Employment.query.get_or_404(id)
     form = EmploymentForm(obj=employment)
@@ -233,6 +238,7 @@ def update_employment(id):
 
 @views.route('/employment/<int:id>/delete', methods=['POST'])
 @login_required
+@role_required('admin')
 def delete_employment(id):
     employment = Employment.query.get_or_404(id)
     db.session.delete(employment)
@@ -271,6 +277,7 @@ def add_degree(alumni_id):
 
 @views.route('/degree/<int:id>/update', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def update_degree(id):
     degree = Degree.query.get_or_404(id)
     form = DegreeForm(obj=degree)
@@ -283,6 +290,7 @@ def update_degree(id):
 
 @views.route('/degree/<int:id>/delete', methods=['POST'])
 @login_required
+@role_required('admin')
 def delete_degree(id):
     degree = Degree.query.get_or_404(id)
     db.session.delete(degree)
@@ -319,6 +327,7 @@ def add_donation(alumni_id):
 
 @views.route('/donation/<int:id>/update', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def update_donation(id):
     donation = Donations.query.get_or_404(id)
     form = DonationsForm(obj=donation)
@@ -331,6 +340,7 @@ def update_donation(id):
 
 @views.route('/donation/<int:id>/delete', methods=['POST'])
 @login_required
+@role_required('admin')
 def delete_donation(id):
     donation = Donations.query.get_or_404(id)
     db.session.delete(donation)
@@ -366,6 +376,7 @@ def add_skillset(alumni_id):
 
 @views.route('/skillset/<int:id>/update', methods=['GET', 'POST'])
 @login_required
+@role_required('admin')
 def update_skillset(id):
     skillset = Skillset.query.get_or_404(id)
     form = SkillsetForm(obj=skillset)
@@ -378,6 +389,7 @@ def update_skillset(id):
 
 @views.route('/skillset/<int:id>/delete', methods=['POST'])
 @login_required
+@role_required('admin')
 def delete_skillset(id):
     skillset = Skillset.query.get_or_404(id)
     db.session.delete(skillset)

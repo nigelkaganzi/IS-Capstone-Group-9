@@ -1,69 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 
+
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumni Management System</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">Manage Addresses</a>
-        <a href="#">Manage Degrees</a>
-        <a href="#">Manage Employment</a>
-        <a href="#">Manage Donations</a>
-        <a href="#">Manage Skillset</a>
-    </nav>
-    <section class="showcase">
-        <div class="container">
-            <h1>Welcome to the Alumni Management System!</h1>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Kennesaw_State_Owls_logo.svg/1085px-Kennesaw_State_Owls_logo.svg.png" alt="School Logo">
-        </div>
-    </section>
-    <div class="container">
-        <h2>Example Form</h2>
-        <form>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit">
-            </div>
-        </form>
-        <h2>Example Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John Doe</td>
-                    <td>john@example.com</td>
-                    <td><button>Edit</button></td>
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>jane@example.com</td>
-                    <td><button>Edit</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+<div class="container mt-5">
+    <h2>Welcome, {{ user.fName }} {{ user.lName }}</h2>
+    <p>You have {{ user.role }} privileges.</p>
+    <p><strong>Job Description:</strong> {{ user.jobDescription }}</p>
+
+    <h3>Your Privileges</h3>
+    <ul>
+        <li>View: {{ 'Yes' if user.viewPriveledgeYN == 'Y' else 'No' }}</li>
+        <li>Insert: {{ 'Yes' if user.insertPriveledgeYN == 'Y' else 'No' }}</li>
+        <li>Update: {{ 'Yes' if user.updatePriveledgeYN == 'Y' else 'No' }}</li>
+        <li>Delete: {{ 'Yes' if user.deletePriveledgeYN == 'Y' else 'No' }}</li>
+    </ul>
+</div>
 {% endblock %}
+

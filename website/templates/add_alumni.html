@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Add Alumni{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add New Alumni</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.alumniID.label }} {{ form.alumniID(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.fName.label }} {{ form.fName(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.lName.label }} {{ form.lName(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.phone.label }} {{ form.phone(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label }} {{ form.email(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.DOB.label }} {{ form.DOB(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.gender.label }} {{ form.gender(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.ethnicity.label }} {{ form.ethnicity(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.website.label }} {{ form.website(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.linkedIn_link.label }} {{ form.linkedIn_link(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.twitter_link.label }} {{ form.twitter_link(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.facebook_link.label }} {{ form.facebook_link(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.instagram_link.label }} {{ form.instagram_link(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.guestSpeakerYN.label }} {{ form.guestSpeakerYN(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.newsLetterYN.label }} {{ form.newsLetterYN(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.imageThumb.label }} {{ form.imageThumb(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.imageNormal.label }} {{ form.imageNormal(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label }} {{ form.description(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.deceasedYN.label }} {{ form.deceasedYN(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.deceasedDT.label }} {{ form.deceasedDT(class='form-control') }}
+        </div>
+        <div class="form-group">
+            {{ form.deceasedNotes.label }} {{ form.deceasedNotes(class='form-control') }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Alumni</button>
+    </form>
+    <a href="{{ url_for('views.alumni_list') }}" class="btn btn-secondary mt-3">Back to Alumni List</a>
+</div>
+{% endblock %}
+
+

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -13,17 +13,14 @@ def login():
         
         user = User.query.filter_by(UID=UID).first()
         if user:
-            print("user found") # Debug print
             if user.password == password:
-                print("Password correct") # Debug print
                 flash('Logged in successfully',category='success')
-                login_user(user, remember=True)
+                login_user(user)
+                session.permanent = False
                 return redirect(url_for('views.home'))
             else:
-                print("Incorrect password")  # Debug print
                 flash('Incorrect username or passoword, try again', category='error')
         else:
-            print("user does not exist")  # Debug print
             flash('Incorrect username or password, try again.', category='error')
     return render_template("login.html", user=current_user)
 

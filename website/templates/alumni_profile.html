@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">{{ alumni.fName }} {{ alumni.lName }}</h2>
-    <p><strong>Alumni ID</strong> {{ alumni.alumniID }}</p>
+    <p><strong>Alumni ID:</strong> {{ alumni.alumniID }}</p>
     <p><strong>Email:</strong> {{ alumni.email }}</p>
     <p><strong>Phone:</strong> {{ alumni.phone }}</p>
     <p><strong>Date of Birth:</strong> {{ alumni.DOB }}</p>
@@ -15,7 +15,14 @@
     <p><strong>Twitter:</strong> <a href="{{ alumni.twitter_link }}" target="_blank">{{ alumni.twitter_link }}</a></p>
     <p><strong>Facebook:</strong> <a href="{{ alumni.facebook_link }}" target="_blank">{{ alumni.facebook_link }}</a></p>
     <p><strong>Instagram:</strong> <a href="{{ alumni.instagram_link }}" target="_blank">{{ alumni.instagram_link }}</a></p>
+    <p><strong>Guest Speaker:</strong> {{ alumni.guestSpeakerYN }}</p>
+    <p><strong>Newsletter:</strong> {{ alumni.newsLetterYN }}</p>
+    <p><strong>Image Thumbnail:</strong> <img src="{{ alumni.imageThumb }}" alt="Thumbnail"></p>
+    <p><strong>Image:</strong> <img src="{{ alumni.imageNormal }}" alt="Image"></p>
     <p><strong>Description:</strong> {{ alumni.description }}</p>
+    <p><strong>Deceased:</strong> {{ alumni.deceasedYN }}</p>
+    <p><strong>Deceased Date:</strong> {{ alumni.deceasedDT }}</p>
+    <p><strong>Deceased Notes:</strong> {{ alumni.deceasedNotes }}</p>
 
     <h3 class="mt-4">Actions</h3>
     <a href="{{ url_for('views.alumni_update', id=alumni.alumniID) }}" class="btn btn-warning">Edit Alumni</a>
