@@ -9,9 +9,12 @@
             <div class="card-body">
                 <p><strong>Company:</strong> {{ employment.company }}</p>
                 <p><strong>Job Title:</strong> {{ employment.job_title }}</p>
-                <p><strong>Start Date:</strong> {{ employment.start_date }}</p>
-                <p><strong>End Date:</strong> {{ employment.end_date }}</p>
-                <p><strong>Current Job:</strong> {{ employment.current_job }}</p>
+                <p><strong>City:</strong> {{ employment.city }}</p>
+                <p><strong>State:</strong> {{ employment.state }}</p>
+                <p><strong>City:</strong> {{ employment.zip }}</p>
+                <p><strong>Start Date:</strong> {{ employment.startDate }}</p>
+                <p><strong>End Date:</strong> {{ employment.endDate }}</p>
+                <p><strong>Current Job:</strong> {{ employment.currentYN}}</p>
                 <a href="{{ url_for('views.update_employment', id=employment.EID) }}" class="btn btn-warning">Edit</a>
                 <form method="POST" action="{{ url_for('views.delete_employment', id=employment.EID) }}" style="display:inline;">
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>

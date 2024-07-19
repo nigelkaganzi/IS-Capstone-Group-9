@@ -3,6 +3,7 @@
 
 {% block content %}
 <div class="container mt-5">
+    <div class="card-body">
     <h2 class="mb-4">{{ alumni.fName }} {{ alumni.lName }}</h2>
     <p><strong>Alumni ID:</strong> {{ alumni.alumniID }}</p>
     <p><strong>Email:</strong> {{ alumni.email }}</p>
@@ -35,6 +36,7 @@
     <a href="{{ url_for('views.view_degrees', alumni_id=alumni.alumniID) }}" class="btn btn-primary">View Degrees</a>
     <a href="{{ url_for('views.view_donations', alumni_id=alumni.alumniID) }}" class="btn btn-primary">View Donations</a>
     <a href="{{ url_for('views.view_skillsets', alumni_id=alumni.alumniID) }}" class="btn btn-primary">View Skillsets</a>
+</div>
 </div>
 {% endblock %}
 

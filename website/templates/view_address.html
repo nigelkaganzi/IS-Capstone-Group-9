@@ -2,17 +2,18 @@
 {% block title %}View Address{% endblock %}
 
 {% block content %}
+
 <div class="container mt-5">
     <h2>Address for Alumni ID: {{ alumni_id }}</h2>
     {% for address in addresses %}
-        <div class="card mt-2">
+    <div class="card mt-2 {% if address.primaryYN == 'Y' %}primary{% else %}secondary{% endif %}">
             <div class="card-body">
                 <h2 class="mb-4">{{ alumni.fName }} {{ alumni.lName }}</h2>
                 <p><strong>Alumni ID</strong> {{ alumni.alumniID }}</p>
                     </br>
-                <p>{{ address.address }}, {{ address.city }}, {{ address.state }} {{ address.zipCode }}</p>
-                <p><strong>Active:</strong> {{ address.activeYN }}</p>
-                <p><strong>Primary:</strong> {{ address.primaryYN }}</p>
+                    <p>{{ address.address }}, {{ address.city }}, {{ address.state }} {{ address.zipCode }}</p>
+                    <p><strong>Active:</strong> {{ address.activeYN }}</p>
+                    <p><strong>Primary:</strong> {{ address.primaryYN }}</p>
                 
                 <a href="{{ url_for('views.update_address', id=address.addressID) }}" class="btn btn-warning">Edit</a>
                 <form method="POST" action="{{ url_for('views.delete_address', id=address.addressID) }}" style="display:inline;">

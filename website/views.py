@@ -127,7 +127,7 @@ def alumni_update(id):
         form.deceasedYN.data = alumni.deceasedYN
         form.deceasedDT.data = alumni.deceasedDT
         form.deceasedNotes.data = alumni.deceasedNotes
-    return render_template('alumni_form.html', form=form, user=current_user)
+    return render_template('add_alumni.html', form=form, user=current_user)
 
 @views.route('/alumni/<int:id>/delete', methods=['POST'])
 @login_required
@@ -144,7 +144,7 @@ def alumni_delete(id):
 @login_required
 def view_addresses(alumni_id):
     alumni = Alumni.query.get_or_404(alumni_id)
-    addresses = Address.query.filter_by(alumniID=alumni_id).all()
+    addresses = Address.query.filter_by(alumniID=alumni_id).order_by(Address.primaryYN.desc()).all()
     return render_template('view_address.html', addresses=addresses, alumni=alumni, alumni_id=alumni_id, user=current_user)
 
 @views.route('/alumni/<int:alumni_id>/address/add', methods=['GET', 'POST'])
