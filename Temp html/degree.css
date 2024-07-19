@@ -62,7 +62,6 @@ nav a:hover {
 }
 
 .form-container input[type="text"],
-.form-container input[type="date"],
 .form-container input[type="email"],
 .form-container input[type="password"],
 .form-container select,
@@ -107,12 +106,7 @@ nav a:hover {
 }
 
 
-*java
-function saveSkill() {
-    alert('Skill information saved!');
-    // Add code to save skill data
-}
 
-function closeForm(formId) {
-    document.getElementById(formId).style.display = 'none';
-}
+
+
+    
