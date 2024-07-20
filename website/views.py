@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for, flash, redirect, request
 from flask_login import login_required, current_user
 from .models import Alumni, Address, User, Employment, Degree, Skillset, Donations, Newsletter, SentTo
 from . import db
-from .forms import AlumniForm, AddressForm,EmploymentForm, DegreeForm, DonationsForm, SkillsetForm
+from .forms import SearchForm, AlumniForm, AddressForm,EmploymentForm, DegreeForm, DonationsForm, SkillsetForm
 from sqlalchemy import or_
 from .decorators import role_required
 views = Blueprint('views', __name__)
@@ -15,24 +15,46 @@ def home():
 @views.route('/alumni', methods=['GET', 'POST'])
 @login_required
 def alumni_list():
+    form = SearchForm()
     alumni = []
+    
+    search_type = None
+    search_term = ""
 
-    if request.method == 'POST':
-        search_term = request.form.get('search', '').strip()
-        
-        if search_term:
+    if form.validate_on_submit():
+        search_type = form.search_type.data
+        search_term = form.search_term.data.strip()
+
+        if search_type == 'name':
             alumni = Alumni.query.filter(
-                or_(
-                    Alumni.fName.ilike(f'%{search_term}%'),
-                    Alumni.lName.ilike(f'%{search_term}%'),
-                    Alumni.email.ilike(f'%{search_term}%')
-                )
+                (Alumni.fName.ilike(f'%{search_term}%')) |
+                (Alumni.lName.ilike(f'%{search_term}%'))
             ).all()
-        else:
-            flash('Please enter a search term.', 'warning')
+        elif search_type == 'employment':
+            employment_records = Employment.query.filter(
+                Employment.jobTitle.ilike(f'%{search_term}%') |
+                Employment.company.ilike(f'%{search_term}%')
+            ).all()
+            alumni_ids = [record.alumniID for record in employment_records]
+            alumni = Alumni.query.filter(Alumni.alumniID.in_(alumni_ids)).all()
+        elif search_type == 'degree':
+            degree_records = Degree.query.filter(
+                Degree.major.ilike(f'%{search_term}%') |
+                Degree.university.ilike(f'%{search_term}%') |
+                Degree.graduationDT.ilike(f'%{search_term}%')
+            ).all()
+            alumni_ids = [record.alumniID for record in degree_records]
+            alumni = Alumni.query.filter(Alumni.alumniID.in_(alumni_ids)).all()
+        elif search_type == 'skill':
+            skillset_records = Skillset.query.filter(
+                Skillset.skill.ilike(f'%{search_term}%')
+            ).all()
+            alumni_ids = [record.alumniID for record in skillset_records]
+            alumni = Alumni.query.filter(Alumni.alumniID.in_(alumni_ids)).all()
+
     else:
         alumni = Alumni.query.all()
-    return render_template("alumni_list.html", alumni=alumni, user=current_user)
+    return render_template("alumni_list.html", alumni=alumni, form=form, user=current_user)
 
 @views.route('/alumni/new', methods=['GET', 'POST'])
 @login_required
@@ -80,53 +102,17 @@ def alumni_profile(id):
 @role_required('admin')
 def alumni_update(id):
     alumni = Alumni.query.get_or_404(id)
-    form = AlumniForm()
+    form = AlumniForm(obj=alumni)
+    
     if form.validate_on_submit():
-        alumni.alumniID = form.alumniID.data
-        alumni.fName = form.fName.data
-        alumni.lName = form.lName.data
-        alumni.phone = form.phone.data
-        alumni.email = form.email.data
-        alumni.DOB = form.DOB.data
-        alumni.gender = form.gender.data
-        alumni.ethnicity = form.ethnicity.data
-        alumni.website = form.website.data
-        alumni.linkedIn_link = form.linkedIn_link.data
-        alumni.twitter_link = form.twitter_link.data
-        alumni.facebook_link = form.facebook_link.data
-        alumni.instagram_link = form.instagram_link.data
-        alumni.guestSpeakerYN = form.guestSpeakerYN.data
-        alumni.newsLetterYN = form.newsLetterYN.data
-        alumni.imageThumb = form.imageThumb.data
-        alumni.imageNormal = form.imageNormal.data
-        alumni.description = form.description.data
-        alumni.deceasedYN = form.deceasedYN.data
-        alumni.deceasedDT = form.deceasedDT.data
-        alumni.deceasedNotes = form.deceasedNotes.data
+        form.populate_obj(alumni)
         db.session.commit()
         flash('Alumni information updated successfully!', 'success')
         return redirect(url_for('views.alumni_list'))
     elif request.method == 'GET':
-        form.fName.data = alumni.fName
-        form.lName.data = alumni.lName
-        form.phone.data = alumni.phone
-        form.email.data = alumni.email
-        form.DOB.data = alumni.DOB
-        form.gender.data = alumni.gender
-        form.ethnicity.data = alumni.ethnicity
-        form.website.data = alumni.website
-        form.linkedIn_link.data = alumni.linkedIn_link
-        form.twitter_link.data = alumni.twitter_link
-        form.facebook_link.data = alumni.facebook_link
-        form.instagram_link.data = alumni.instagram_link
-        form.guestSpeakerYN.data = alumni.guestSpeakerYN
-        form.newsLetterYN.data = alumni.newsLetterYN
-        form.imageThumb.data = alumni.imageThumb
-        form.imageNormal.data = alumni.imageNormal
-        form.description.data = alumni.description
-        form.deceasedYN.data = alumni.deceasedYN
-        form.deceasedDT.data = alumni.deceasedDT
-        form.deceasedNotes.data = alumni.deceasedNotes
+        form.populate_obj(alumni)
+    else:
+        flash('There was an error updating alumni, please try again', category='error')
     return render_template('add_alumni.html', form=form, user=current_user)
 
 @views.route('/alumni/<int:id>/delete', methods=['POST'])
@@ -196,7 +182,7 @@ def delete_address(id):
 @login_required
 def view_employment(alumni_id):
     alumni = Alumni.query.get_or_404(alumni_id)
-    employments = Employment.query.filter_by(alumniID=alumni_id).all()
+    employments = Employment.query.filter_by(alumniID=alumni_id).order_by(Employment.startDate.desc()).all()
     return render_template('view_employment.html', employments=employments, alumni=alumni, alumni_id=alumni_id, user=current_user)
 
 @views.route('/alumni/<int:alumni_id>/employment/add', methods=['GET', 'POST'])
@@ -251,7 +237,7 @@ def delete_employment(id):
 @login_required
 def view_degrees(alumni_id):
     alumni = Alumni.query.get_or_404(alumni_id)
-    degrees = Degree.query.filter_by(alumniID=alumni_id).all()
+    degrees = Degree.query.filter_by(alumniID=alumni_id).order_by(Degree.graduationDT).all()
     return render_template('view_degrees.html', degrees=degrees, alumni=alumni, alumni_id=alumni_id, user=current_user)
 
 @views.route('/alumni/<int:alumni_id>/degrees/add', methods=['GET', 'POST'])
@@ -303,7 +289,7 @@ def delete_degree(id):
 @login_required
 def view_donations(alumni_id):
     alumni = Alumni.query.get_or_404(alumni_id)
-    donations = Donations.query.filter_by(alumniID=alumni_id).all()
+    donations = Donations.query.filter_by(alumniID=alumni_id).order_by(Donations.donationDT).all()
     return render_template('view_donations.html', donations=donations, alumni=alumni, alumni_id=alumni_id, user=current_user)
 
 @views.route('/alumni/<int:alumni_id>/donations/add', methods=['GET', 'POST'])

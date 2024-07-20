@@ -3,9 +3,23 @@ from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaFi
 from wtforms.validators import DataRequired, Email, Length, Optional
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, DateField, TextAreaField
+from wtforms import StringField, SubmitField, IntegerField, DateField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Optional
 
+class SearchForm(FlaskForm):
+    search_type = SelectField(
+        'Search Criteria',
+        choices=[
+            ('name', 'Name'),
+            ('employment', 'Employment'),
+            ('degree', 'Degree'),
+            ('skill', 'Skill')
+        ],
+        validators=[Optional()]
+    )
+    search_term = StringField('Search Term', validators=[DataRequired()])
+    submit = SubmitField('Search')
+    
 class AlumniForm(FlaskForm):
     alumniID = IntegerField('Alumni ID',validators=[DataRequired()])
     fName = StringField('First Name', validators=[DataRequired(), Length(max=20)])
@@ -71,7 +85,7 @@ class SkillsetForm(FlaskForm):
     SID = IntegerField('Skillset ID', validators=[DataRequired()])
     alumniID = IntegerField('Alumni ID', validators=[DataRequired()])
     skill = StringField('Skill', validators=[DataRequired(), Length(max=50)])
-    proficiency = StringField('Proficiency', validators=[Optional(), Length(max=10)])
+    proficiency = StringField('Proficiency', validators=[Optional(), Length(max=20)])
     description = StringField('Description', validators=[Optional(), Length(max=100)])
     submit = SubmitField('Submit')
     

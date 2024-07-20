@@ -81,7 +81,7 @@ class Skillset(db.Model):
     SID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     alumniID = db.Column(db.Integer, db.ForeignKey('alumni.alumniID'), nullable=False)
     skill = db.Column(db.String(50), nullable=False)
-    proficiency = db.Column(db.String(10))
+    proficiency = db.Column(db.String(20))
     description = db.Column(db.String(100))
 
 class Donations(db.Model):

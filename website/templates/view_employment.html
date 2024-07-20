@@ -5,10 +5,10 @@
 <div class="container mt-5">
     <h2>Employment for Alumni ID: {{ alumni_id }}</h2>
     {% for employment in employments %}
-        <div class="card mt-2">
+        <div class="card mt-2 {% if employment.currentYN == 'Y' %}primary{% else %}secondary{% endif %}">
             <div class="card-body">
                 <p><strong>Company:</strong> {{ employment.company }}</p>
-                <p><strong>Job Title:</strong> {{ employment.job_title }}</p>
+                <p><strong>Job Title:</strong> {{ employment.jobTitle }}</p>
                 <p><strong>City:</strong> {{ employment.city }}</p>
                 <p><strong>State:</strong> {{ employment.state }}</p>
                 <p><strong>City:</strong> {{ employment.zip }}</p>
