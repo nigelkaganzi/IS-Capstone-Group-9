@@ -3,15 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="../static/styles/login.css">
+    <title>Login - KSU Alumni Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .header-container {
+            background-color: #FFC107; /* KSU yellow */
+            color: black;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 5px; /* Reduced margin */
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+        }
+        .logo-container {
+            margin-bottom: 5px; /* Reduced margin */
+        }
+        .logo-container img {
+            width: 200px; /* Adjust the width as needed */
+            height: auto;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-container h3 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            border: none;
+            border-radius: 5px;
+            color: #FFC107; /* KSU yellow */
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: #333;
+        }
+        .small-text {
+            font-size: 0.8em;
+            color: #555;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <p>Kennesaw State University Department of Information Systems and Security Alumni Management System</p>
-    <p>KSU Logo</p>
-    <p>Test Users</p>
-    <p>Admin User ID: 0123456789 Admin Password:password123</p>
-    <p>Admin User ID: 1123456789 Admin Password:password124</p>
+    <div class="header-container">
+        <h1>Kennesaw State University Department of Information Systems and Security Alumni Management System</h1>
+    </div>
+    <div class="logo-container">
+        <img src="https://1000logos.net/wp-content/uploads/2021/11/Kennesaw-State-Owls-Logo.png" alt="KSU Logo">
+    </div>
     <div class="login-container">
         <form method="POST">
             <h3>Login</h3>
@@ -25,7 +102,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-     
+        <div class="small-text">
+            <p>Test Users</p>
+            <p>Admin User ID: 0123456789 Admin Password: password123</p>
+        </div>
     </div>
 </body>
 </html>

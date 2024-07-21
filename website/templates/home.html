@@ -1,21 +1,87 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 
-
-
 {% block content %}
-<div class="container mt-5">
-    <h2>Welcome, {{ user.fName }} {{ user.lName }}</h2>
-    <p>You have {{ user.role }} privileges.</p>
-    <p><strong>Job Description:</strong> {{ user.jobDescription }}</p>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        header img {
+            max-width: 150px;
+            height: auto;
+        }
+        h2 {
+            font-size: 2.5em;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        h3 {
+            font-size: 2em;
+            color: #444;
+            margin-top: 30px;
+        }
+        .privileges-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        .privileges-table th, .privileges-table td {
+            border: 1px solid #FFD700;
+            padding: 8px;
+            text-align: center;
+        }
+        .privileges-table th {
+            background-color: #FFD700;
+            color: #000;
+            font-weight: bold;
+        }
+        .privileges-table td {
+            background-color: #FFFACD;
+            color: #000;
+        }
+    </style>
 
-    <h3>Your Privileges</h3>
-    <ul>
-        <li>View: {{ 'Yes' if user.viewPriveledgeYN == 'Y' else 'No' }}</li>
-        <li>Insert: {{ 'Yes' if user.insertPriveledgeYN == 'Y' else 'No' }}</li>
-        <li>Update: {{ 'Yes' if user.updatePriveledgeYN == 'Y' else 'No' }}</li>
-        <li>Delete: {{ 'Yes' if user.deletePriveledgeYN == 'Y' else 'No' }}</li>
-    </ul>
-</div>
-{% endblock %}
+<body>
+    <header>
+        <img src="https://1000logos.net/wp-content/uploads/2021/11/Kennesaw-State-Owls-Logo.png" alt="Kennesaw State Owls Logo">
+    </header>
+    
+    <div class="container mt-5">
+        <h2>Welcome, {{ user.fName }} {{ user.lName }}</h2>
+        <p><strong>Job Description:</strong> {{ user.jobDescription }}</p>
+        <p>You have {{ user.role }} privileges.</p>
+        <table class="privileges-table">
+            <tr>
+                <th>Privilege</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>View</td>
+                <td>{{ 'Yes' if user.viewPriveledgeYN == 'Y' else 'No' }}</td>
+            </tr>
+            <tr>
+                <td>Insert</td>
+                <td>{{ 'Yes' if user.insertPriveledgeYN == 'Y' else 'No' }}</td>
+            </tr>
+            <tr>
+                <td>Update</td>
+                <td>{{ 'Yes' if user.updatePriveledgeYN == 'Y' else 'No' }}</td>
+            </tr>
+            <tr>
+                <td>Delete</td>
+                <td>{{ 'Yes' if user.deletePriveledgeYN == 'Y' else 'No' }}</td>
+            </tr>
+        </table>
+    </div>
 
+    {% endblock %}
